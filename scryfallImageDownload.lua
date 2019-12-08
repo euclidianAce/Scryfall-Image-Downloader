@@ -87,7 +87,10 @@ local data = {}
 local uris = {}
 local imageData = {}
 while #cards > 0 do
-	local cardData = getCardData( table.remove(cards) )
+	local cardData, err = getCardData( table.remove(cards) )
+	if not cardData then
+		print(err)
+	end
 	table.insert(data, cardData)
 end
 while #data > 0 do
