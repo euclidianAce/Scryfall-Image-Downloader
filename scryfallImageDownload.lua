@@ -4,6 +4,18 @@ local coroutine = require "coroutine"
 local https = require "ssl.https"
 local json = require "cjson.safe"
 
+
+--[[
+TODO:
+	add options to change size and format of image
+	maybe more info to download?
+		like oracle text or something, idk
+
+]]--
+
+
+
+
 local scryfallAPI = "https://api.scryfall.com/%s"
 local function getURL(str)
 	return scryfallAPI:format(str)
@@ -95,23 +107,20 @@ while #cards > 0 do
 end
 while #data > 0 do
 	local uri, cardName = decodeCardData( table.remove(data) )
-	table.insert(uris, 
-		{
-			uri = uri, 
-			cardName = cardName
-		}
-	)
+	table.insert(uris, {
+		uri = uri, 
+		cardName = cardName
+	})
 end
 while #uris > 0 do
 	local uriData = table.remove(uris)
-	table.insert(imageData, 
-		{
-			data = getImageData(uriData.uri), 
-			cardName = uriData.cardName
-		}
-	)
+	table.insert(imageData, {
+		data = getImageData(uriData.uri), 
+		cardName = uriData.cardName
+	})
 end
 while #imageData > 0 do
 	local image = table.remove(imageData)
 	makeImage(image.data, image.cardName)
 end
+
